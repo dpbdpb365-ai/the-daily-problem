@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Círculo exterior -->
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="4 4" />
+  <!-- Cuadrado inscrito -->
+  <rect x="36.4" y="36.4" width="127.2" height="127.2" fill="none" stroke="#0f172a" stroke-width="3" />
+  <!-- Rombo central -->
+  <polygon points="100,36.4 163.6,100 100,163.6 36.4,100" fill="#eff6ff" stroke="#3b82f6" stroke-width="3" />
+  <!-- Radio indicativo -->
+  <line x1="100" y1="100" x2="190" y2="100" stroke="#64748b" stroke-width="1.5" />
+  <text x="135" y="95" font-family="sans-serif" font-size="12" fill="#64748b">r = 10</text>
+  <circle cx="100" cy="100" r="3" fill="#64748b" />
+</svg>
