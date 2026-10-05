@@ -2,16 +2,12 @@
   <!-- Fondo oscuro profundo -->
   <rect width="100" height="100" rx="22" fill="#0A0A0A"/>
   
-  <!-- Silueta del foco curva y limpia -->
-  <path d="M 24 44 A 26 26 0 1 1 76 44 C 76 58 66 66 64 72 H 36 C 34 66 24 58 24 44 Z" fill="none" stroke="#27272A" stroke-width="2"/>
-  <line x1="40" y1="77" x2="60" y2="77" stroke="#27272A" stroke-width="2" stroke-linecap="round"/>
-  <line x1="44" y1="82" x2="56" y2="82" stroke="#27272A" stroke-width="2" stroke-linecap="round"/>
+  <!-- Silueta del foco (color plata claro para máximo contraste en miniatura) -->
+  <path d="M 24 44 A 26 26 0 1 1 76 44 C 76 58 66 66 64 72 H 36 C 34 66 24 58 24 44 Z" fill="none" stroke="#71717A" stroke-width="2.5"/>
+  <line x1="40" y1="77" x2="60" y2="77" stroke="#71717A" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="44" y1="82" x2="56" y2="82" stroke="#71717A" stroke-width="2.5" stroke-linecap="round"/>
 
-  <!-- Filamento continuo asimétrico -->
-  <!-- 1. Tallo de la 'd' desde arriba (Y=24) hasta la base de su círculo (Y=50) -->
-  <!-- 2. Círculo de la 'd' que sube y se conecta a la 'p' en línea recta -->
-  <!-- 3. Tallo de la 'p' que baja directo hasta tocar la base del foco (Y=72) -->
-  <!-- 4. Círculo de la 'p' -->
+  <!-- Filamento continuo asimétrico (amarillo brillante neón) -->
   <path d="M 46 24 L 46 50 A 9 9 0 1 1 46 32 L 54 32 L 54 72 M 54 32 A 9 9 0 1 1 54 50" 
-        fill="none" stroke="#FBBF24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        fill="none" stroke="#FDE047" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
