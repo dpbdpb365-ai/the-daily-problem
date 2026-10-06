@@ -8,10 +8,25 @@ const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "The Daily Problem",
-  description: "A daily geometry challenge",
+  title: 'The Daily Problem',
+  description: 'Un nuevo reto de lógica y teoría de juegos cada día.',
+  metadataBase: new URL('https://thedailyproblem.com'),
+  openGraph: {
+    title: 'The Daily Problem',
+    description: 'Un nuevo reto de lógica y teoría de juegos cada día. ¿Podrás mantener tu racha?',
+    url: 'https://thedailyproblem.com',
+    siteName: 'The Daily Problem',
+    locale: 'es_MX',
+    type: 'website',
+    // Ya no ponemos "images:" aquí, Next.js lo inyecta solo
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'The Daily Problem',
+    description: 'Un nuevo reto de lógica y teoría de juegos cada día.',
+    // Ya no ponemos "images:" aquí tampoco
+  },
 };
-
 export default function RootLayout({
   children,
 }: {
