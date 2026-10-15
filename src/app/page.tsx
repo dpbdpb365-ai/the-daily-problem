@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { dailyProblems } from "@/lib/problems"
+import SubscribeBox from '@/components/SubscribeBox';
 
 export default function Home() {
   const [answer, setAnswer] = useState("");
@@ -119,18 +120,33 @@ export default function Home() {
     <main className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
       <div className="mx-auto max-w-3xl space-y-12">
 
-        <header className="flex flex-col items-center justify-between sm:flex-row">
-          <div className="text-center sm:text-left cursor-pointer" onClick={() => window.location.href = '/'}>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">The Daily Problem</h1>
-            <p className="mt-2 text-slate-600">No calculators. Just pure logic.</p>
+      {/* NUEVO HEADER: Dividido en 3 columnas iguales */}
+      <header className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between w-full">
+          
+          {/* 1. IZQUIERDA: Logo y Título */}
+          <div className="flex items-center gap-4 cursor-pointer" onClick={() => window.location.href = '/'}>
+            {/* Le agregué 'rounded-xl' para que el fondo negro se vea como un ícono pulido */}
+            <img src="/logo.svg" alt="The Daily Problem Logo" className="w-16 h-16 object-contain rounded-xl shadow-sm" />
+            <div className="text-left">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">The Daily Problem</h1>
+              <p className="mt-1 text-sm sm:text-base text-slate-600">No formulas. Just pure logic.</p>
+            </div>
           </div>
-          <div className="mt-4 flex flex-col items-center rounded-lg bg-orange-100 px-4 py-2 text-orange-600 sm:mt-0 sm:items-end">
+          
+          {/* 2. CENTRO: Botón de Suscripción */}
+          <div className="flex-1 flex justify-center">
+            <SubscribeBox variant="button" />
+          </div>
+          
+          {/* 3. DERECHA: Racha */}
+          <div className="flex flex-col items-center rounded-lg bg-orange-100 px-4 py-2 text-orange-600 shrink-0">
             <span className="text-xs font-bold uppercase tracking-wider">Current Streak</span>
             <span className="text-xl font-black">🔥 {streak}</span>
           </div>
+          
         </header>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="mb-6 flex items-center justify-between">
             <span className="text-sm font-semibold uppercase tracking-wider text-blue-600">
               {activeProblem.date === todayStr ? "Today's Challenge" : "Archived Challenge"}
@@ -213,6 +229,11 @@ export default function Home() {
             {feedback.status !== 'idle' && (
               <div className={`rounded-lg p-4 text-sm font-medium ${feedback.status === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
                 {feedback.message}
+              </div>
+            )}
+            {isSolved && (
+              <div className="mt-2">
+                <SubscribeBox variant="victory" />
               </div>
             )}
 

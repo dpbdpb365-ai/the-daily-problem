@@ -16,20 +16,19 @@ export const dailyProblems = [
       plays: "45K+" // <--- Número inventado de tráfico
     },
     {
-      id: "desert-chase", 
-      date: "2026-09-28", 
+      id: "desert-chase",
+      date: "2026-09-28",
       displayDate: "Sep 28",
-      title: "The Desert Chase",
-      context: "A jeep with a full tank of gas can travel 500 miles. You have a limitless supply of jeeps at your base camp, but they can only transfer gas to each other.",
+      title: "Desert Chase",
+      context: "A suspect is spotted on a flat desert highway exactly 40 miles due East of a police station. The suspect suddenly speeds off due North at exactly 60 mph.",
       options: [
-        "The jeeps can transfer any amount of gas instantly when they meet.",
-        "You must leave no stranded jeeps in the desert."
+        "The police cruiser immediately departs the station, traveling in a straight diagonal line across the open desert floor at a constant 120 mph to intercept."
       ],
-      question: "What is the minimum number of jeeps that must leave the base camp to deliver one jeep exactly 750 miles into the desert?",
-      answer: "3",
-      hint: "Think about sending jeeps out in a convoy. If one gives part of its fuel to the others and turns back just in time to make it home, how far can the rest go?",
-      successMessage: "Correct! You need 3 jeeps. Jeep 1 turns back early, Jeep 2 turns back midway, leaving the final jeep with enough fuel to reach 750 miles.",
-      plays: "32K+"
+      question: "At what exact angle (in degrees North of due East) must the police cruiser travel to perfectly intercept the suspect?",
+      answer: "30",
+      hint: "Don't worry about the 40-mile distance or how long the chase takes. Think about the ratio of their speeds. If you form a right triangle, the hypotenuse is the police path. How does it compare to the suspect's path?",
+      successMessage: "Correct! 30 degrees. The distance is a red herring. Since the police travel twice as fast as the suspect (120 vs 60), the hypotenuse of the chase triangle will always be twice as long as the opposite side. A right triangle with these proportions always has a 30-degree angle (sin(30°) = 0.5).",
+      plays: "New"
     },
     {
         id: "patient-zero", 
@@ -213,5 +212,67 @@ export const dailyProblems = [
         hint: "Think about the fundamental rule of triangles: What is the maximum length of the longest piece relative to the sum of the other two pieces?",
         successMessage: "Correct! 25%. For a triangle to form, no single piece can be 50% or more of the original length. If you plot the possible cut combinations, exactly 1/4 of them satisfy this rule.",
         plays: "37K+"
+      },
+      {
+        id: "the-trampoline-garden",
+        date: "2026-10-13",
+        displayDate: "Oct 13",
+        title: "The Trampoline Garden",
+        context: "You just bought a piece of land for your garden shaped as a right-angled triangle. Its sides measure exactly 15, 20, and 25 meters.",
+        options: [
+          "You want to install the largest possible circular trampoline right in the center."
+        ],
+        question: "What is the diameter (in meters) of your new trampoline?",
+        answer: "10",
+        hint: "Calculate the total area of the garden first. Then, imagine drawing lines from the exact center of the trampoline to the three corners of the yard.",
+        successMessage: "Correct! The diameter is 10. The garden's total area is 150. Splitting it into three smaller triangles from the center gives an area formula of (15r + 20r + 25r) / 2 = 150. Solving for r gives a radius of 5, so the diameter is 10.",
+        plays: "New"
+      },
+      {
+        id: "the-silicon-foundry",
+        date: "2026-10-14",
+        displayDate: "Oct 14",
+        title: "The Silicon Foundry",
+        context: "A microchip factory steadily ships exactly 60,000 completed chips every 30-day month.",
+        options: [
+          "Due to the complex and delicate manufacturing process, there are always exactly 24,000 unfinished chips on the assembly line at any given moment."
+        ],
+        question: "On average, how many days does it take to manufacture a single chip from start to finish?",
+        answer: "12",
+        hint: "Convert the monthly shipping rate into a daily rate first. Then, ask yourself: how long would it take to clear the entire current inventory on the floor at that daily rate?",
+        successMessage: "Correct! 12 days. This is a classic application of Little's Law (Inventory = Rate × Time). The factory outputs 2,000 chips per day. To maintain a constant work-in-process of 24,000 chips, each chip must spend exactly 12 days in the system (24,000 / 2,000).",
+        plays: "New"
+      },
+      {
+        id: "the-grandmaster-invitational",
+        date: "2026-10-16",
+        displayDate: "Oct 16",
+        title: "The Grandmaster Invitational",
+        context: "A prestigious single-elimination chess tournament begins with exactly 1,025 competitors.",
+        options: [
+          "Every match ends with a winner advancing and a loser being eliminated (no draws).",
+          "If any round has an odd number of competitors, the highest-ranked player receives a 'bye' and automatically advances to the next round."
+        ],
+        question: "What is the exact total number of matches that must be played to crown the final champion?",
+        answer: "1024",
+        hint: "No hint for this one",
+        successMessage: "Correct! 1024 matches. The rule about odd numbers and automatic advances is a red herring. Every single match eliminates exactly one player from the tournament. To end up with 1 champion out of 1,025 players, you must eliminate exactly 1,024 people. Therefore, exactly 1,024 matches must be played.",
+        plays: "New"
+      },
+      {
+        id: "the-antibody-pool",
+        date: "2026-10-18",
+        displayDate: "Oct 18",
+        title: "The Antibody Pool",
+        context: "A hospital is searching for a rare, life-saving antibody present in exactly one of its 500 patients. Blood tests for this antibody are extremely expensive and take 24 hours to process.",
+        options: [
+          "To save money, doctors can mix tiny drops of blood from any combination of patients into a single test tube.",
+          "Because the antibody is needed immediately, all tests must be prepared and processed simultaneously today."
+        ],
+        question: "What is the absolute minimum number of tests you must run to mathematically guarantee you find the exact patient with the antibody?",
+        answer: "9",
+        hint: "Think of each test as a 'Yes/No' signal. If you use 3 tests simultaneously, you can create 8 unique 'Yes/No' patterns by testing different mixtures.",
+        successMessage: "Correct! 9 tests. This uses binary logic. Each test gives one bit of information (Positive/Negative). 9 tests can produce 2^9 = 512 unique combinations. By assigning a unique 'recipe' of tests to each of the 500 patients, the final pattern of positive and negative results will point directly to the specific patient.",
+        plays: "New"
       }
   ]
