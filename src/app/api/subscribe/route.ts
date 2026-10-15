@@ -21,8 +21,9 @@ export async function POST(request: Request) {
       const errorData = await response.json();
       const errorMessage = errorData.message || '';
       
-      // Detectamos si el error de Loops es porque ya está registrado en tu lista
-      if (errorMessage.toLowerCase().includes('already on your list')) {
+      // Buscamos cualquier variación de "ya existe" o "ya está"
+      const msg = errorMessage.toLowerCase();
+      if (msg.includes('already') || msg.includes('exist') || msg.includes('duplicate')) {
         return NextResponse.json({ alreadyExists: true }, { status: 400 });
       }
 
