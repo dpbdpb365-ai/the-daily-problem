@@ -9,14 +9,14 @@ interface SubscribeBoxProps {
 export default function SubscribeBox({ variant = "button" }: SubscribeBoxProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  // Agregamos "already" a las opciones de status
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "already">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("loading");
 
     try {
-      // Mandamos el correo a nuestro propio puente (API)
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
@@ -25,9 +25,16 @@ export default function SubscribeBox({ variant = "button" }: SubscribeBoxProps) 
         body: JSON.stringify({ email }),
       });
 
+      // Leemos la respuesta de nuestro route.ts
+      const data = await response.json();
+
       if (response.ok) {
         setStatus("success");
-        setEmail(""); // Limpiamos el campo
+        setEmail(""); 
+      } else if (data.alreadyExists) {
+        // Si nuestro route.ts detecta que ya existía, cambiamos a este nuevo estado
+        setStatus("already");
+        setEmail("");
       } else {
         setStatus("idle");
         alert("Oops, algo salió mal. Intenta de nuevo.");
@@ -36,7 +43,7 @@ export default function SubscribeBox({ variant = "button" }: SubscribeBoxProps) 
       setStatus("idle");
       alert("Error de conexión. Intenta de nuevo.");
     }
-  };;
+  };
 
   // --- VARIANTE 1: EL BOTÓN CON POP-UP ---
   if (variant === "button") {
@@ -61,11 +68,19 @@ export default function SubscribeBox({ variant = "button" }: SubscribeBoxProps) 
               <h3 className="text-xl font-bold text-slate-900 mb-2">Get tomorrow's puzzle</h3>
               <p className="text-slate-600 text-sm mb-6">Join the list to receive the daily challenge before anyone else. Zero spam.</p>
               
-              {status === "success" ? (
+              {status === "success" && (
                 <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-center text-emerald-800 font-medium">
                   Done! You're on the list for tomorrow. 🧠
                 </div>
-              ) : (
+              )}
+
+              {status === "already" && (
+                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-center text-blue-800 font-medium">
+                  You're already on the list! See you tomorrow. 👋
+                </div>
+              )}
+
+              {(status === "idle" || status === "loading") && (
                 <form onSubmit={handleSubmit} className="flex flex-col gap-3">
                   <input
                     type="email"
@@ -98,11 +113,20 @@ export default function SubscribeBox({ variant = "button" }: SubscribeBoxProps) 
         <h3 className="text-lg font-bold text-slate-900 mb-1">Ready for tomorrow?</h3>
         <p className="text-slate-600 text-sm">Join the list to get the daily puzzle.</p>
       </div>
-      {status === "success" ? (
+      
+      {status === "success" && (
         <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-center text-emerald-800 font-medium">
           Done! You're on the list. 🧠
         </div>
-      ) : (
+      )}
+
+      {status === "already" && (
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg text-center text-blue-800 font-medium">
+          You're already on the list! See you tomorrow. 👋
+        </div>
+      )}
+
+      {(status === "idle" || status === "loading") && (
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           <input
             type="email"
