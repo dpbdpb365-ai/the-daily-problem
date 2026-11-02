@@ -4,7 +4,9 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { dailyProblems } from "@/lib/problems"
-import SubscribeBox from '@/components/SubscribeBox';
+import SubscribeBox from '@/components/SubscribeBox'
+// Importamos el nuevo componente
+import SolutionReveal from '@/components/SolutionReveal'
 
 export default function Home() {
   const [answer, setAnswer] = useState("");
@@ -18,22 +20,18 @@ export default function Home() {
   const [isClient, setIsClient] = useState(false);
   const [includeTime, setIncludeTime] = useState(true);
 
-  // Estado para saber qué problema estamos viendo
   const [activeProblem, setActiveProblem] = useState(dailyProblems[0]);
 
-  // Calculamos la fecha local de hoy
   const now = new Date();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 
-  // Filtramos los problemas para la sección de Archivo (todos los que su fecha sea igual o menor a hoy)
   const pastProblems = dailyProblems
     .filter(p => p.date <= todayStr)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Los ordena del más reciente al más viejo
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   useEffect(() => {
     setIsClient(true);
 
-    // Revisamos si la URL tiene un ID de problema específico (ej. ?id=desert-chase)
     const params = new URLSearchParams(window.location.search);
     const problemIdFromUrl = params.get('id');
     
@@ -48,7 +46,6 @@ export default function Home() {
     
     setActiveProblem(currentProblem);
 
-    // Revisamos el caché específico para ESTE problema
     const savedState = localStorage.getItem(`dailyProblem_${currentProblem.id}`);
     const savedStreak = localStorage.getItem('dailyProblem_Streak');
     
@@ -66,7 +63,7 @@ export default function Home() {
     } else {
       setStartTime(Date.now());
     }
-  }, []); // Solo se ejecuta al cargar la página
+  }, []);
 
   const handleSubmit = () => {
     if (isSolved) return;
@@ -104,15 +101,15 @@ export default function Home() {
 
   const handleShare = () => {
     const timeText = includeTime ? `⏱️ Time: ${timeTaken} | ` : "";
-    // Generamos el link con el ID exacto del problema para que los amigos aterricen ahí
-    const problemLink = `thedailyproblem.com/?id=${activeProblem.id}`;
+    // Aseguramos el https:// para que las apps lo reconozcan como hipervínculo
+    const problemLink = `https://thedailyproblem.com/?id=${activeProblem.id}`;
     
-    const shareText = `${activeProblem.title} 🎲\n${timeText}💡 Hint: ${showHint ? 'Yes' : 'No'} | 🔥 Streak: ${streak}\n\n"${activeProblem.context.substring(0, 60)}..."\n\nPlay at: ${problemLink}`;
+    const shareText = `Correctly solved: ${activeProblem.title}! 💡\n${timeText}❓ Hint: ${showHint ? 'Yes' : 'No'} | 🔥 Streak: ${streak}\n\n"${activeProblem.context.substring(0, 60)}... [Click link to read more]"\n\nPlay here: ${problemLink}`;
     
     navigator.clipboard.writeText(shareText).then(() => {
       alert("Results copied to clipboard! Ready to paste on X, WhatsApp, etc.");
     });
-  };
+};
 
   if (!isClient) return null; 
 
@@ -120,12 +117,8 @@ export default function Home() {
     <main className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
       <div className="mx-auto max-w-3xl space-y-12">
 
-      {/* NUEVO HEADER: Dividido en 3 columnas iguales */}
       <header className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between w-full">
-          
-          {/* 1. IZQUIERDA: Logo y Título */}
           <div className="flex items-center gap-4 cursor-pointer" onClick={() => window.location.href = '/'}>
-            {/* Le agregué 'rounded-xl' para que el fondo negro se vea como un ícono pulido */}
             <img src="/logo.svg" alt="The Daily Problem Logo" className="w-16 h-16 object-contain rounded-xl shadow-sm" />
             <div className="text-left">
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">The Daily Problem</h1>
@@ -133,17 +126,14 @@ export default function Home() {
             </div>
           </div>
           
-          {/* 2. CENTRO: Botón de Suscripción */}
           <div className="flex-1 flex justify-center">
             <SubscribeBox variant="button" />
           </div>
           
-          {/* 3. DERECHA: Racha */}
           <div className="flex flex-col items-center rounded-lg bg-orange-100 px-4 py-2 text-orange-600 shrink-0">
             <span className="text-xs font-bold uppercase tracking-wider">Current Streak</span>
             <span className="text-xl font-black">🔥 {streak}</span>
           </div>
-          
         </header>
 
        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
@@ -158,8 +148,7 @@ export default function Home() {
           <div className="space-y-4 text-slate-700">
             <p>{activeProblem.context}</p>
             
-            {/* NUEVO: Bloque que dibuja la imagen solo si el problema tiene una */}
-            {/* @ts-ignore - Evitamos errores si algunos problemas no tienen imageUrl */}
+            {/* @ts-ignore */}
             {activeProblem.imageUrl && (
               <div className="my-6 flex justify-center">
                 <img 
@@ -242,10 +231,17 @@ export default function Home() {
                 <strong>Hint:</strong> {activeProblem.hint}
               </div>
             )}
+            
+            {/* NUEVO: Bloque que bloquea o revela la solución */}
+            <SolutionReveal 
+              releaseDate={activeProblem.date} 
+              // @ts-ignore - en caso de que aún no hayas agregado 'solution' a todos tus problemas
+              solutionText={activeProblem.solution || "Solution will be explained here."} 
+            />
+
           </div>
         </section>
 
-        {/* Historial de Problemas - Ahora dinámico y funcional */}
         <section className="pt-8">
           <h2 className="mb-6 text-lg font-semibold tracking-tight text-slate-900">Problem Archive</h2>
           <div className="relative">
