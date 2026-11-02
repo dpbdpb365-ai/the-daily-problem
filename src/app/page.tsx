@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { dailyProblems } from "@/lib/problems"
 import SubscribeBox from '@/components/SubscribeBox'
-// Importamos el nuevo componente
-import SolutionReveal from '@/components/SolutionReveal'
 
 export default function Home() {
   const [answer, setAnswer] = useState("");
@@ -232,13 +230,6 @@ export default function Home() {
               </div>
             )}
             
-            {/* NUEVO: Bloque que bloquea o revela la solución */}
-            <SolutionReveal 
-              releaseDate={activeProblem.date} 
-              // @ts-ignore - en caso de que aún no hayas agregado 'solution' a todos tus problemas
-              solutionText={activeProblem.solution || "Solution will be explained here."} 
-            />
-
           </div>
         </section>
 
