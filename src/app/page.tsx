@@ -44,48 +44,7 @@ export default function Home() {
     
     setActiveProblem(currentProblem);
 
-    const savedState = localStorage.getItem(`dailyProblem_${currentProblem.id}`);
-    const savedStreak = localStorage.getItem('dailyProblem_Streak');
-    
-    if (savedStreak) setStreak(parseInt(savedStreak));
-
-    if (savedState) {
-      const data = JSON.parse(savedState);
-      setIsSolved(true);
-      setShowHint(data.usedHint);
-      setTimeTaken(data.time);
-      setFeedback({ 
-        status: 'success', 
-        message: `${currentProblem.successMessage} You solved it in ${data.time}.` 
-      });
-    } else {
-      setStartTime(Date.now());
-    }
-  }, []);
-
-  const handleSubmit = () => {
-    if (isSolved) return;
-    
-    const cleanAnswer = answer.replace('%', '').trim();
-    if (!cleanAnswer) return;
-
-    if (cleanAnswer === activeProblem.answer) {
-      const endTime = Date.now();
-      const diffInSeconds = Math.floor((endTime - startTime) / 1000);
-      const minutes = Math.floor(diffInSeconds / 60);
-      const seconds = diffInSeconds % 60;
-      const formattedTime = `${minutes}m ${seconds}s`;
-
-      setIsSolved(true);
-      setTimeTaken(formattedTime);
-      setStreak(prev => prev + 1);
-      
-      setFeedback({ 
-        status: 'success', 
-        message: `${activeProblem.successMessage} You solved it in ${formattedTime}.` 
-      });
-
-      localStorage.setItem(`dailyProblem_${activeProblem.id}`, JSON.stringify({
+    const savedState = localStorage.getItem(`dailyProblem_${currentProblem.id}`); const savedStreak = localStorage.getItem('dailyProblem_Streak');  if (savedStreak) setStreak(parseInt(savedStreak));  if (savedState) { const data = JSON.parse(savedState); setIsSolved(true); setShowHint(data.usedHint); setTimeTaken(data.time); setFeedback({ status: 'success', message: `${currentProblem.successMessage} You solved it in ${data.time}.` }); } else { setStartTime(Date.now()); } }, []);  const handleSubmit = () => { if (isSolved) return;  const cleanAnswer = answer.replace('\%', '').trim(); if (!cleanAnswer) return;  if (cleanAnswer === activeProblem.answer) { const endTime = Date.now(); const diffInSeconds = Math.floor((endTime - startTime) / 1000); const minutes = Math.floor(diffInSeconds / 60); const seconds = diffInSeconds \% 60; const formattedTime = `${minutes}m ${seconds}s`;  setIsSolved(true); setTimeTaken(formattedTime); setStreak(prev => prev + 1);  setFeedback({ status: 'success', message: `${activeProblem.successMessage} You solved it in ${formattedTime}.` });  localStorage.setItem(`dailyProblem_${activeProblem.id}`, JSON.stringify({
         solved: true,
         usedHint: showHint,
         time: formattedTime
@@ -98,11 +57,9 @@ export default function Home() {
   };
 
   const handleShare = () => {
-    const timeText = includeTime ? `⏱️ Time: ${timeTaken} | ` : "";
-    // Aseguramos el https:// para que las apps lo reconozcan como hipervínculo
-    const problemLink = `https://thedailyproblem.com/?id=${activeProblem.id}`;
+    const timeText = includeTime ? `⏱️ Time: ${timeTaken} \vert{} ` : ""; const problemLink = `https://thedailyproblem.com/?id=${activeProblem.id}`;
     
-    const shareText = `Correctly solved: ${activeProblem.title}! 💡\n${timeText}❓ Hint: ${showHint ? 'Yes' : 'No'} | 🔥 Streak: ${streak}\n\n"${activeProblem.context.substring(0, 60)}... [Click link to read more]"\n\nPlay here: ${problemLink}`;
+    const shareText = `Correctly solved: ${activeProblem.title}! 💡\n${timeText}❓ Hint: ${showHint ? 'Yes' : 'No'} \vert{} 🔥 Streak: ${streak}\n\n"${activeProblem.context.substring(0, 60)}... [Click link to read more]"\n\nPlay here: ${problemLink}`;
     
     navigator.clipboard.writeText(shareText).then(() => {
       alert("Results copied to clipboard! Ready to paste on X, WhatsApp, etc.");
@@ -214,43 +171,13 @@ export default function Home() {
             )}
 
             {feedback.status !== 'idle' && (
-              <div className={`rounded-lg p-4 text-sm font-medium ${feedback.status === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
-                {feedback.message}
-              </div>
-            )}
-            {isSolved && (
-              <div className="mt-2">
-                <SubscribeBox variant="victory" />
-              </div>
-            )}
-
-            {showHint && !isSolved && (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
-                <strong>Hint:</strong> {activeProblem.hint}
-              </div>
-            )}
-            
-          </div>
-        </section>
-
-        <section className="pt-8">
-          <h2 className="mb-6 text-lg font-semibold tracking-tight text-slate-900">Problem Archive</h2>
-          <div className="relative">
-            <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {pastProblems.map((problem) => (
-                <li 
-                  key={problem.id} 
-                  onClick={() => window.location.href = `/?id=${problem.id}`}
+              <div className={`rounded-lg p-4 text-sm font-medium ${feedback.status === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}> {feedback.message} </div> )} {isSolved && ( <div className="mt-2"> <SubscribeBox variant="victory" /> </div> )}  {showHint && !isSolved && ( <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"> <strong>Hint:</strong> {activeProblem.hint} </div> )}  </div> </section>  <section className="pt-8"> <h2 className="mb-6 text-lg font-semibold tracking-tight text-slate-900">Problem Archive</h2> <div className="relative"> <ul className="grid grid-cols-1 md:grid-cols-3 gap-4"> {pastProblems.map((problem) => ( <li key={problem.id} onClick={() => window.location.href = `/?id=${problem.id}`}
                   className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 transition-all hover:border-blue-400 hover:shadow-md cursor-pointer"
                 >
                   <div className="mb-4 flex items-start justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                       {problem.displayDate}
                     </span>
-                    <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-                      <span>👥</span>
-                      <span>{problem.plays}</span>
-                    </div>
                   </div>
                   <span className="block text-sm font-semibold text-slate-900">{problem.title}</span>
                 </li>
