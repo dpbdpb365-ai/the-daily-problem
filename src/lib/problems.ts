@@ -143,7 +143,7 @@ export const dailyProblems = [
     ],
     question: "What is the total number of handshakes that will occur?",
     answer: "4950",
-    hint: "The first person shakes hands with 99 people. The second person has already shaken the first person's hand, so they shake hands with 98 new people. Is there a formula for this sum?",
+    hint: "The first person shakes hands with 99 people. The second person has already shaken the first person's hand, follow the pattern.",
     successMessage: "Correct! The formula is n(n-1)/2. 100 × 99 / 2 = 4,950 handshakes.",
     solution: "Let's trace the handshakes. The first diplomat shakes hands with the other 99 people. The second diplomat has already shaken hands with the first, so they only need to shake hands with the remaining 98 people. The third shakes hands with 97, and so on, down to the last person who has already shaken everyone's hand. We need to calculate the sum of 99 + 98 + 97 ... + 1. The mathematical formula for the sum of consecutive integers is n(n+1)/2, where n is the highest number. So, (99 × 100) / 2 = 9,900 / 2 = 4,950. Alternatively, think of it this way: 100 people each shake 99 hands (9,900), but since it takes two people to make one handshake, we divide by 2. The total number of handshakes is 4950.",
     plays: "60K+"
@@ -159,27 +159,27 @@ export const dailyProblems = [
     ],
     question: "What is the absolute minimum number of patients that must inevitably be experiencing all four symptoms simultaneously?",
     answer: "10",
-    hint: "Instead of counting the symptoms they have, count the symptoms they lack. If you distribute the 'missing' symptoms to as many different people as possible, how many people are left untouched by the absences?",
+    hint: "Instead of counting the symptoms they have, count the symptoms they lack.",
     successMessage: "Correct! 10 patients. 30 lack a cough, 25 lack a fever, 20 lack fatigue, and 15 lack smell. The maximum number of people missing at least one symptom is 90. The remaining 10 must have all four.",
     solution: "The easiest way to find the minimum overlap is to look at who is *missing* symptoms rather than who has them. Out of 100 patients, 30 lack a cough (100 - 70), 25 lack a fever (100 - 75), 20 lack fatigue (100 - 80), and 15 lack smell (100 - 85). To minimize the number of people with all four symptoms, we must assume these missing symptoms are distributed among as many different patients as possible. If we add up all the 'missing' symptoms (30 + 25 + 20 + 15), we get 90. In the most extreme case, 90 completely different people are each missing exactly one symptom. This leaves exactly 10 patients (100 - 90) who missed out on the 'missing' symptoms. Therefore, those 10 people must have all four symptoms. The answer is 10.",
     plays: "48K+"
   },
   {
-    id: "011-diagonal-packing", 
-    date: "2026-11-12", 
-    displayDate: "Nov 12",
-    title: "Diagonal Packing",
-    context: "A square bounds three identical solid circles of radius 10. They are packed tightly along the square's main diagonal. The first circle touches the bottom and right edges of the square. The second circle touches the first and third. The third circle touches the top and left edges.",
-    imageUrl: "/packing.svg",
-    options: [
-      "The circles are completely contained within the square."
+    "id": "011-diagonal-packing", 
+    "date": "2026-11-12", 
+    "displayDate": "Nov 12",
+    "title": "Diagonal Packing",
+    "context": "Three identical solid circles of radius 10 are packed tightly along the main diagonal of a square.",
+    "imageUrl": "/packing.svg",
+    "options": [
+      "All circles are perfectly tangent to each other and the boundaries of the square."
     ],
-    question: "What is the area of the empty space inside the square? (Round your answer to the nearest whole number)",
-    answer: "1389",
-    hint: "Trust in Pythagoras all the way.",
-    successMessage: "Correct! The square's side length is roughly 48.28, making its area ~2331. Subtracting the area of the 3 circles (~942) leaves exactly 1389.",
-    solution: "Let's find the side length of the square. The three circles form a line of 40 units between the centers of the outer two circles (radius 10 + diameter 20 + radius 10). The distance from the center of each outer circle to the true corner of the square is the diagonal of a 10x10 square, which is 10√2. Thus, the total length of the large square's diagonal is 40 + 20√2. We can find the side of the square by dividing the diagonal by √2, which gives a side length of 20 + 20√2 (approx 48.28). The total area of the square is (20 + 20√2)², which equals 1200 + 800√2 (approx 2331.37). The area of the three circles is 3 × π × 10² = 300π (approx 942.48). Subtracting the circles from the square leaves an empty space area of approximately 1389.",
-    plays: "29K+"
+    "question": "What is the area of the empty space inside the square? (Round to the nearest whole number)",
+    "answer": "1389",
+    "hint": "Calculate the square's full diagonal first. It consists of the circles' diameters plus the distance from the outer centers to the corners.",
+    "successMessage": "Correct! The square's side length is 20 + 20√2 (≈48.28), making its area ≈2331. Subtracting the 3 circles (~942) leaves 1389.",
+    "solution": "1. Find the square's diagonal: The distance between the centers of the two outer circles is 40. The distance from an outer circle's center to the square's corner forms a right triangle with sides 10 and 10, making its hypotenuse 10√2. The total diagonal is 40 + 20√2.\n2. Find the square's side: Side = Diagonal / √2 = (40 / √2) + 20 = 20√2 + 20.\n3. Calculate areas: Square Area = (20 + 20√2)² = 1200 + 800√2 ≈ 2331.37. Circle Area = 3 × π × 10² = 300π ≈ 942.48.\n4. Subtract: 2331.37 - 942.48 ≈ 1388.89. Rounded to the nearest whole number, it is 1389.",
+    "plays": "29K+"
   },
   {
     id: "012-the-rendezvous", 
@@ -224,7 +224,7 @@ export const dailyProblems = [
     ],
     question: "If you distribute the marbles optimally, what is the maximum possible probability (in percentage, rounded to one decimal) of drawing a blue marble?",
     answer: "74.9",
-    hint: "Don't divide them evenly. What if you make one bag an absolute guarantee to win, and put the rest in the other bag?",
+    hint: "Don't divide them evenly.",
     successMessage: "Correct! 74.9%. Put exactly 1 blue marble in the first bag (100% chance), and the remaining 199 marbles in the second bag (99/199 = ~49.7% chance). Averaging the probabilities of the two bags gives ~74.9%.",
     solution: "To maximize your chances, you shouldn't divide the marbles evenly. You want to make one bag an absolute mathematical certainty, and leave the second bag with the highest possible odds. If you put exactly 1 blue marble in the first bag and nothing else, anyone who picks that bag has a 100% chance of drawing blue. You then put the remaining 199 marbles (99 blue, 100 red) into the second bag. If the opponent picks the second bag, their chance of drawing blue is 99 out of 199 (approx 49.74%). Since the opponent has a 50% chance of picking either bag, we average the two probabilities: (100% + 49.74%) / 2 = 74.87%. Rounded to one decimal, the maximum probability is 74.9.",
     plays: "75K+"
@@ -450,6 +450,62 @@ export const dailyProblems = [
     "hint": "Don't try to simulate the timeline or overlapping groups. First look for the cycle time of the average visitor",
     "successMessage": "Correct! 290 minutes. Using Little's Law, the overall average time a person spends inside is Inventory (500) divided by Rate (200/hr) = 2.5 hours (150 minutes). If 70% stay for 90 minutes, the 30% must stay for 290 minutes to pull the total average up to 150.",
     "solution": "This is a classic queueing theory trap. According to Little's Law, the average number of items in a stable system equals the arrival rate multiplied by the average time spent in the system (L = λW). The inventory (L) is 500 people, and the arrival rate (λ) is 200 people per hour. Therefore, the overall average time (W) a person spends inside is 500 / 200 = 2.5 hours, or 150 minutes. We can now set up a weighted average equation for the two groups: (0.70 × 90 minutes) + (0.30 × X) = 150 minutes. This simplifies to 63 + 0.3X = 150. Subtracting 63 leaves 0.3X = 87. Dividing by 0.3 gives X = 290. The Enthusiasts spend exactly 290 minutes inside.",
+    "plays": "New"
+  },
+  {
+    "id": "028-the-island-charter",
+    "date": "2026-11-29",
+    "displayDate": "Nov 29",
+    "title": "The Island Charter",
+    "context": "You are organizing a school trip to a remote island. The charter airline bills strictly per full aircraft rather than individual tickets, meaning chartering any plane with empty seats is not permitted.",
+    "options": [
+      "The fleet provides only two aircraft models: a light aircraft carrying exactly 3 passengers, and an executive turboprop carrying exactly 10 passengers.",
+      "You can charter any combination of either model (including zero of one type).",
+      "Every aircraft flown must be 100% full; zero empty seats are allowed."
+    ],
+    "question": "What is the minimum number of students needed to guarantee that every possible group size from that number onwards can be transported with zero empty seats?",
+    "answer": "18",
+    "hint": "Since the smallest aircraft carries 3 passengers, you only need to find the first sequence of 3 consecutive achievable totals.",
+    "successMessage": "Correct! 18 students. 17 is the maximum impossible number (neither 17 nor 17 - 10 = 7 are divisible by 3). Once you reach three consecutive valid totals (18 = 3×6, 19 = 10 + 3×3, 20 = 10×2), every subsequent number can be formed by adding 3-passenger planes.",
+    "solution": "This is an application of the Frobenius Coin Problem for two coprime numbers: a = 3 and b = 10. The greatest integer that cannot be expressed as 3x + 10y (where x, y ≥ 0) is given by ab - a - b = (3 × 10) - 3 - 10 = 17. We can confirm 17 is impossible without formulas: using no 10-seater requires 17 to be divisible by 3 (it is not); using one 10-seater leaves 7 seats (not divisible by 3); and using two 10-seaters exceeds 17. However, the three consecutive numbers right after 17 are all achievable: 18 (six 3-seaters), 19 (one 10-seater + three 3-seaters), and 20 (two 10-seaters). Because the smallest aircraft holds 3 seats, any integer N ≥ 18 can be generated simply by taking the corresponding base case (18, 19, or 20) and adding multiples of 3. Thus, 18 is the exact minimum threshold where zero empty seats can always be guaranteed.",
+    "plays": "New"
+  },
+  {
+    "id": "029-the-extra-canvas",
+    "date": "2026-11-30",
+    "displayDate": "Nov 30",
+    "title": "The Extra Canvas",
+    "image": "029-the-extra-canvas.svg",
+    "context": "You are hosting an event in a circular outdoor venue with a diameter of 20 meters. To protect the space from rain, you hang a square canvas so that all four of its corners touch the venue's circular boundary. To increase coverage, you hang a second identical canvas directly over the first, rotated by 45 degrees.",
+    "options": [
+      "The circular terrain has a diameter of exactly 20 meters (d = 20).",
+      "Both square canvases are identical and inscribed within the circle (all corners touch the perimeter).",
+      "The second canvas is rotated exactly 45° relative to the first."
+    ],
+    "question": "How much additional area (in square meters, rounded to the nearest integer) does the second canvas cover that was not already covered by the first?",
+    "answer": "34",
+    "hint": "The diagonal of each square equals the diameter of the circle (20 m). Notice that rotating the square 45° creates 4 identical protruding triangular tips outside the first square.",
+    "successMessage": "Correct! 34 m² (exact: 600 - 400√2 ≈ 34.31 m²). The first canvas covers 200 m² (d²/2). When the second canvas is placed at 45°, it does not form a solid regular octagon, but an 8-pointed star where 4 identical triangular tips extend beyond the base square. Each tip has an area of (10 - 5√2)² ≈ 8.58 m², adding a total of ~34.31 m² of newly covered area.",
+    "solution": "1. Area of the first square (A₁):\nSince the square is inscribed in a circle with diameter d = 20 m, its diagonal equals 20 m.\nArea = d² / 2 = 20² / 2 = 200 m².\nThe side length of the square is s = 20 / √2 = 10√2 ≈ 14.142 m.\n\n2. Geometry of the newly covered area:\nWhen the second identical square is rotated by 45°, its four vertices protrude past the four flat edges of the first square. By symmetry, the newly covered area consists of 4 identical protruding right isosceles triangles.\n\nFor any single protruding tip:\n- The distance from the center to the vertex of the tip is the circle radius: R = 10 m.\n- The distance from the center to the edge of the first square is half its side: s / 2 = 5√2 m.\n- The height of this triangular tip is: h = 10 - 5√2 m.\n- Because the corner is a 90° angle, the base of the triangle along the edge of the first square is 2h = 2(10 - 5√2) m.\n\n3. Calculate the area of the 4 tips:\nArea of 1 tip = (base × height) / 2 = h² = (10 - 5√2)² = 150 - 100√2 ≈ 8.5786 m².\nTotal Additional Area = 4 × (150 - 100√2) = 600 - 400√2 ≈ 34.3146 m².\n\nRounded to the nearest integer, the answer is 34.",
+    "plays": "New"
+  },
+  {
+    "id": "030-the-barons-estate",
+    "date": "2026-12-01",
+    "displayDate": "Dec 01",
+    "title": "The Baron's Estate",
+    "context": "Three siblings inherit a vast estate of exactly 1 square mile of land, which they immediately divide among themselves into three perfectly equal parcels.",
+    "options": [
+      "Months later, two long-lost legitimate heirs emerge.",
+      "Fortunately, the family lawyer discovers a second, identical 1-square-mile estate.",
+      "The original siblings refuse to alter or split their existing parcels.",
+      "The second estate must be subdivided into a set number of equal-sized smaller plots to be distributed."
+    ],
+    "question": "What is the minimum number of equal plots the second estate must be divided into so that all 5 heirs end up owning the exact same total amount of land?",
+    "answer": "15",
+    "hint": "Calculate what fraction of the total land each heir should ultimately own, and compare it to what the first three siblings already have.",
+    "successMessage": "Correct! 15 plots. There are 2 square miles in total and 5 heirs, so each heir must end up with 2/5 of a square mile. The first 3 siblings already own 1/3 each. The difference they need is 2/5 - 1/3 = 6/15 - 5/15 = 1/15. The two new heirs each need 2/5 (or 6/15). The second estate must be divided into 15 equal plots: 1 plot for each of the original siblings (3 total), and 6 plots for each of the new heirs (12 total). 3 + 12 = 15.",
+    "solution": "1. Find the target ownership:\nTotal land = 2 square miles. Total heirs = 5. \nTarget per heir = 2/5 of a square mile.\n\n2. Calculate the deficit for the original siblings:\nThey currently own 1/3 of a square mile each.\nDeficit = Target - Current = 2/5 - 1/3 = 6/15 - 5/15 = 1/15 of a square mile.\nThis means each of the 3 original siblings needs exactly 1/15 of a square mile from the second estate.\n\n3. Calculate the deficit for the new heirs:\nThey currently own nothing. They each need exactly 2/5 of a square mile from the second estate. \nExpressed in fifteenths, 2/5 = 6/15.\n\n4. Sum it up:\nTo distribute portions in increments of 1/15 and 6/15, the second estate must be divided into 15 equal plots. \nOriginal sibling 1 gets 1 plot.\nOriginal sibling 2 gets 1 plot.\nOriginal sibling 3 gets 1 plot.\nNew heir 1 gets 6 plots.\nNew heir 2 gets 6 plots.\nTotal = 1 + 1 + 1 + 6 + 6 = 15 plots.",
     "plays": "New"
   },
   {
