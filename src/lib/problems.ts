@@ -176,7 +176,7 @@ export const dailyProblems = [
     ],
     "question": "What is the area of the empty space inside the square? (Round to the nearest whole number)",
     "answer": "1389",
-    "hint": "Calculate the square's full diagonal first. It consists of the circles' diameters plus the distance from the outer centers to the corners.",
+    "hint": "Pythagoras all the way",
     "successMessage": "Correct! The square's side length is 20 + 20√2 (≈48.28), making its area ≈2331. Subtracting the 3 circles (~942) leaves 1389.",
     "solution": "1. Find the square's diagonal: The distance between the centers of the two outer circles is 40. The distance from an outer circle's center to the square's corner forms a right triangle with sides 10 and 10, making its hypotenuse 10√2. The total diagonal is 40 + 20√2.\n2. Find the square's side: Side = Diagonal / √2 = (40 / √2) + 20 = 20√2 + 20.\n3. Calculate areas: Square Area = (20 + 20√2)² = 1200 + 800√2 ≈ 2331.37. Circle Area = 3 × π × 10² = 300π ≈ 942.48.\n4. Subtract: 2331.37 - 942.48 ≈ 1388.89. Rounded to the nearest whole number, it is 1389.",
     "plays": "29K+"
@@ -203,6 +203,7 @@ export const dailyProblems = [
     displayDate: "Nov 14",
     title: "The Interception",
     context: "A police car is exactly 20 km directly West of a thief. At the exact same moment, the thief speeds away in a straight line heading strictly Northwest (135 degrees) at a constant 100 km/h. The police car drives in a straight line strictly North to intercept him.",
+    "imageUrl": "/013-the-interception.svg",
     options: [
       "Assume flat terrain and instant acceleration."
     ],
@@ -506,6 +507,24 @@ export const dailyProblems = [
     "hint": "Calculate what fraction of the total land each heir should ultimately own, and compare it to what the first three siblings already have.",
     "successMessage": "Correct! 15 plots. There are 2 square miles in total and 5 heirs, so each heir must end up with 2/5 of a square mile. The first 3 siblings already own 1/3 each. The difference they need is 2/5 - 1/3 = 6/15 - 5/15 = 1/15. The two new heirs each need 2/5 (or 6/15). The second estate must be divided into 15 equal plots: 1 plot for each of the original siblings (3 total), and 6 plots for each of the new heirs (12 total). 3 + 12 = 15.",
     "solution": "1. Find the target ownership:\nTotal land = 2 square miles. Total heirs = 5. \nTarget per heir = 2/5 of a square mile.\n\n2. Calculate the deficit for the original siblings:\nThey currently own 1/3 of a square mile each.\nDeficit = Target - Current = 2/5 - 1/3 = 6/15 - 5/15 = 1/15 of a square mile.\nThis means each of the 3 original siblings needs exactly 1/15 of a square mile from the second estate.\n\n3. Calculate the deficit for the new heirs:\nThey currently own nothing. They each need exactly 2/5 of a square mile from the second estate. \nExpressed in fifteenths, 2/5 = 6/15.\n\n4. Sum it up:\nTo distribute portions in increments of 1/15 and 6/15, the second estate must be divided into 15 equal plots. \nOriginal sibling 1 gets 1 plot.\nOriginal sibling 2 gets 1 plot.\nOriginal sibling 3 gets 1 plot.\nNew heir 1 gets 6 plots.\nNew heir 2 gets 6 plots.\nTotal = 1 + 1 + 1 + 6 + 6 = 15 plots.",
+    "plays": "New"
+  },
+  {
+    "id": "031-dropped-drives",
+    "date": "2026-12-02",
+    "displayDate": "Dec 02",
+    "title": "Dropped Drives",
+    "top": true,
+    "context": "A frantic junior sysadmin trips and drops 5 identical-looking master backup drives (Drives A, B, C, D, and E). Without knowing which is which, they blindly insert all 5 drives back into the 5 specific server bays.",
+    "options": [
+      "Each of the 5 drives belongs to exactly one specific bay.",
+      "The sysadmin inserts one drive per bay, completely at random.",
+      "The server cluster will successfully boot if AT LEAST ONE drive is in its correct, original bay."
+    ],
+    "question": "What is the exact probability (expressed as a simplified fraction, like 'a/b') that the server boots?",
+    "answer": "19/30",
+    "hint": "Each drive insertion is not independent. For example, if you put drive A in Bay B, drive B will automatically miss its Bay",
+    "successMessage": "Correct! 19/30 (approx. 63.3%). Many mistakenly calculate 1 - (4/5)^5, assuming the slots are independent. But because a drive placed in the wrong bay forces another drive out of its spot, we must use the inclusion-exclusion principle for Derangements. The probability of 0 matches for 5 items is: 1/2! - 1/3! + 1/4! - 1/5! = 60/120 - 20/120 + 5/120 - 1/120 = 44/120, which simplifies to 11/30. Thus, the chance of at least one match is 1 - 11/30 = 19/30.",
     "plays": "New"
   },
   {

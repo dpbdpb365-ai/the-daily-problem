@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 350" style="background-color: #0f172a; border-radius: 8px;">
+  <defs>
+    <!-- Patrón de cuadrícula de fondo -->
+    <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#1e293b" stroke-width="1.5" />
+    </pattern>
+
+    <!-- Puntas de flecha para los vectores -->
+    <marker id="arrowBlue" refX="7" refY="4" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#3b82f6" />
+    </marker>
+    <marker id="arrowRed" refX="7" refY="4" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#ef4444" />
+    </marker>
+    <marker id="arrowWhiteLeft" refX="1" refY="4" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M 8 0 L 0 4 L 8 8 z" fill="#94a3b8" />
+    </marker>
+    <marker id="arrowWhiteRight" refX="7" refY="4" markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#94a3b8" />
+    </marker>
+  </defs>
+
+  <!-- Cuadrícula de fondo -->
+  <rect width="100%" height="100%" fill="url(#grid)" />
+
+  <!-- 1. PUNTO DE INTERCEPCIÓN -->
+  <g transform="translate(100, 50)">
+    <path d="M -10 -10 L 10 10 M -10 10 L 10 -10" stroke="#f8fafc" stroke-width="3" stroke-linecap="round" />
+    <text x="20" y="5" fill="#f8fafc" font-family="sans-serif" font-size="18" font-weight="bold">Interception</text>
+  </g>
+
+  <!-- 2. LÍNEA DE DISTANCIA (20 km) -->
+  <line x1="130" y1="280" x2="270" y2="280" stroke="#94a3b8" stroke-width="2" marker-start="url(#arrowWhiteLeft)" marker-end="url(#arrowWhiteRight)" />
+  <text x="200" y="270" fill="#f8fafc" font-family="sans-serif" font-size="16" text-anchor="middle">20 km</text>
+
+  <!-- 3. TRAYECTORIA DEL POLICÍA (Vector Azul) -->
+  <line x1="100" y1="240" x2="100" y2="75" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" />
+  <text x="85" y="165" fill="#f8fafc" font-family="sans-serif" font-size="16" text-anchor="end">? km/h</text>
+
+  <!-- 4. TRAYECTORIA DEL LADRÓN (Vector Rojo Punteado) -->
+  <line x1="280" y1="260" x2="115" y2="95" stroke="#ef4444" stroke-dasharray="10,8" stroke-width="3" marker-end="url(#arrowRed)" />
+  <text x="235" y="150" fill="#f8fafc" font-family="sans-serif" font-size="16" text-anchor="start">100 km/h</text>
+
+  <!-- 5. ÁNGULO DE 135° (Matemáticamente exacto desde el Este) -->
+  <!-- Línea de referencia hacia el Este -->
+  <line x1="300" y1="280" x2="350" y2="280" stroke="#64748b" stroke-dasharray="4,4" stroke-width="1.5" />
+  <!-- Arco del ángulo -->
+  <path d="M 335 280 A 35 35 0 0 0 275 255" fill="none" stroke="#94a3b8" stroke-width="1.5" />
+  <text x="315" y="240" fill="#cbd5e1" font-family="sans-serif" font-size="14">135°</text>
+
+  <!-- 6. COCHE DE POLICÍA (Azul) -->
+  <g transform="translate(100, 280)">
+    <rect x="-14" y="-22" width="28" height="44" rx="4" fill="#1e3a8a" stroke="#3b82f6" stroke-width="2" />
+    <rect x="-10" y="-12" width="20" height="14" rx="2" fill="#0f172a" /> <!-- Parabrisas -->
+    <rect x="-6" y="-18" width="12" height="4" fill="#ef4444" /> <!-- Sirena roja -->
+    <rect x="0" y="-18" width="6" height="4" fill="#3b82f6" /> <!-- Sirena azul -->
+    <text x="0" y="40" fill="#cbd5e1" font-family="sans-serif" font-size="14" text-anchor="middle">Police</text>
+  </g>
+
+  <!-- 7. COCHE DEL LADRÓN (Rojo, rotado -45°) -->
+  <g transform="translate(300, 280)">
+    <g transform="rotate(-45)">
+      <rect x="-14" y="-22" width="28" height="44" rx="4" fill="#7f1d1d" stroke="#ef4444" stroke-width="2" />
+      <rect x="-10" y="-12" width="20" height="14" rx="2" fill="#0f172a" /> <!-- Parabrisas -->
+    </g>
+    <text x="40" y="10" fill="#cbd5e1" font-family="sans-serif" font-size="14" text-anchor="start">Thief</text>
+  </g>
+
+  <!-- 8. ROSA DE LOS VIENTOS (Brújula) -->
+  <g transform="translate(390, 70)" stroke="#64748b" stroke-width="1.5">
+    <line x1="-25" y1="0" x2="25" y2="0" />
+    <line x1="0" y1="-25" x2="0" y2="25" />
+    <polygon points="0,-25 -4,-12 0,-15 4,-12" fill="#64748b" stroke="none" /> <!-- Flecha Norte -->
+    <text x="0" y="-32" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle" stroke="none">N</text>
+    <text x="0" y="38" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle" stroke="none">S</text>
+    <text x="-32" y="4" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle" stroke="none">W</text>
+    <text x="32" y="4" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle" stroke="none">E</text>
+  </g>
+</svg>
