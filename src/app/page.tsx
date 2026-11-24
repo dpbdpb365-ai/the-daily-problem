@@ -90,15 +90,61 @@ export default function Home() {
     }
   }, [todayStr, yesterdayStr]);
 
+  const parseNumeric = (val: string): number | null => {
+    if (/^-?\d+(\.\d+)?\/-?\d+(\.\d+)?$/.test(val)) {
+      const [num, den] = val.split('/').map(Number);
+      return den !== 0 ? num / den : null;
+    }
+    if (/^-?\d+(\.\d+)?$/.test(val)) {
+      return parseFloat(val);
+    }
+    return null;
+  };
+
+  const matchesRounded = (inputNum: number, targetNum: number): boolean => {
+    if (Math.abs(inputNum - targetNum) < 1e-6) return true;
+    if (inputNum === Number(targetNum.toFixed(2))) return true;
+    if (inputNum === Number(targetNum.toFixed(1))) return true;
+    if (targetNum >= 1 && inputNum === Math.round(targetNum)) return true;
+    return false;
+  };
+
   const handleSubmit = () => {
     if (isSolved) return;
 
+    const hasPercent = answer.includes('%');
     const cleanInput = answer.replace(/[%$,\s]/g, '').toLowerCase();
-    const cleanExpected = activeProblem.answer.replace(/[%$,\s]/g, '').toLowerCase();
-
     if (!cleanInput) return;
 
-    if (cleanInput === cleanExpected) {
+    const validAnswers = activeProblem.answer
+      .split('|')
+      .map(a => a.replace(/[%$,\s]/g, '').toLowerCase());
+
+    const inputNum = parseNumeric(cleanInput);
+
+    const isCorrect = validAnswers.some((expected) => {
+      // 1. Coincidencia exacta (ej. "4000", "four", "1/6")
+      if (cleanInput === expected) return true;
+
+      // 2. Comparación numérica y de fracciones
+      const expectedNum = parseNumeric(expected);
+      if (inputNum === null || expectedNum === null) return false;
+
+      // Fracciones equivalentes o ceros extra (ej. "2/12" === "1/6" o "12.50" === "12.5")
+      if (Math.abs(inputNum - expectedNum) < 1e-6) return true;
+
+      // Si la respuesta esperada es una fracción (ej. "1/6"), permitir redondeo
+      if (expected.includes('/')) {
+        if (hasPercent) {
+          return matchesRounded(inputNum, expectedNum * 100);
+        }
+        return matchesRounded(inputNum, expectedNum);
+      }
+
+      return false;
+    });
+
+    if (isCorrect) {
       const endTime = Date.now();
       const diffInSeconds = Math.max(0, Math.floor((endTime - startTime) / 1000));
       const minutes = Math.floor(diffInSeconds / 60);
