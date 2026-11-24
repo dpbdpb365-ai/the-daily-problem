@@ -381,7 +381,7 @@ export const dailyProblems = [
       "The guard says 'Ten'. The third guest replies 'Three' and enters."
     ],
     question: "The spy confidently walks up. The guard says 'Five'. What exact number must the spy reply to enter safely?",
-    answer: "4",
+    answer: "4|four",
     hint: "No hint for this one.",
     successMessage: "Correct! 4. Your brain naturally wants this to be a mathematical sequence, but it's actually a spelling puzzle. You just have to count the letters in the word!",
     solution: "This is a classic lateral thinking trap. Our brains are hardwired to look for mathematical patterns when we see numbers. When we hear 'Twelve gets Six' and 'Six gets Three', we instantly assume the rule is 'divide by two'. But when 'Ten gets Three', the mathematical logic shatters. To solve it, you must shift your perspective laterally from math to language. The rule is simply to count the number of letters in the spoken word. 'Twelve' has 6 letters. 'Six' has 3 letters. 'Ten' has 3 letters. When the guard says 'Five' (F-I-V-E), it has 4 letters. The spy must answer 4.",
