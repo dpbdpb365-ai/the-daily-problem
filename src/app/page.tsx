@@ -20,8 +20,13 @@ export default function Home() {
 
   const [activeProblem, setActiveProblem] = useState(dailyProblems[0]);
 
+  // Fechas de hoy y ayer en formato YYYY-MM-DD (hora local)
   const now = new Date();
   const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+  
+  const yesterday = new Date(now);
+  yesterday.setDate(now.getDate() - 1);
+  const yesterdayStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
 
   const pastProblems = dailyProblems
     .filter(p => p.date <= todayStr)
@@ -44,12 +49,94 @@ export default function Home() {
     
     setActiveProblem(currentProblem);
 
-    const savedState = localStorage.getItem(`dailyProblem_${currentProblem.id}`); const savedStreak = localStorage.getItem('dailyProblem_Streak');  if (savedStreak) setStreak(parseInt(savedStreak));  if (savedState) { const data = JSON.parse(savedState); setIsSolved(true); setShowHint(data.usedHint); setTimeTaken(data.time); setFeedback({ status: 'success', message: `${currentProblem.successMessage} You solved it in ${data.time}.` }); } else { setStartTime(Date.now()); } }, []);  const handleSubmit = () => { if (isSolved) return;  const cleanAnswer = answer.replace('\%', '').trim(); if (!cleanAnswer) return;  if (cleanAnswer === activeProblem.answer) { const endTime = Date.now(); const diffInSeconds = Math.floor((endTime - startTime) / 1000); const minutes = Math.floor(diffInSeconds / 60); const seconds = diffInSeconds % 60; const formattedTime = `${minutes}m ${seconds}s`;  setIsSolved(true); setTimeTaken(formattedTime); setStreak(prev => prev + 1);  setFeedback({ status: 'success', message: `${activeProblem.successMessage} You solved it in ${formattedTime}.` });  localStorage.setItem(`dailyProblem_${activeProblem.id}`, JSON.stringify({
+    // 1. Validación de la racha al cargar la página
+    const savedStreak = localStorage.getItem('dailyProblem_Streak');
+    const lastSolvedDate = localStorage.getItem('dailyProblem_LastSolvedDate');
+
+    if (savedStreak && lastSolvedDate) {
+      if (lastSolvedDate === todayStr || lastSolvedDate === yesterdayStr) {
+        setStreak(parseInt(savedStreak, 10));
+      } else {
+        // Si dejó pasar un día entero sin resolver el reto diario, pierde la racha
+        setStreak(0);
+        localStorage.setItem('dailyProblem_Streak', '0');
+      }
+    } else {
+      setStreak(0);
+    }
+
+    // 2. Estado del problema y temporizador persistente
+    const savedState = localStorage.getItem(`dailyProblem_${currentProblem.id}`);
+    if (savedState) {
+      const data = JSON.parse(savedState);
+      setIsSolved(true);
+      setShowHint(data.usedHint);
+      setTimeTaken(data.time);
+      setFeedback({
+        status: 'success',
+        message: `${currentProblem.successMessage} You solved it in ${data.time}.`
+      });
+    } else {
+      const startTimeKey = `dailyProblem_startTime_${currentProblem.id}`;
+      const savedStartTime = localStorage.getItem(startTimeKey);
+      
+      if (savedStartTime) {
+        setStartTime(parseInt(savedStartTime, 10));
+      } else {
+        const nowTime = Date.now();
+        setStartTime(nowTime);
+        localStorage.setItem(startTimeKey, nowTime.toString());
+      }
+    }
+  }, [todayStr, yesterdayStr]);
+
+  const handleSubmit = () => {
+    if (isSolved) return;
+
+    const cleanInput = answer.replace(/[%$,\s]/g, '').toLowerCase();
+    const cleanExpected = activeProblem.answer.replace(/[%$,\s]/g, '').toLowerCase();
+
+    if (!cleanInput) return;
+
+    if (cleanInput === cleanExpected) {
+      const endTime = Date.now();
+      const diffInSeconds = Math.max(0, Math.floor((endTime - startTime) / 1000));
+      const minutes = Math.floor(diffInSeconds / 60);
+      const seconds = diffInSeconds % 60;
+      const formattedTime = `${minutes}m ${seconds}s`;
+
+      setIsSolved(true);
+      setTimeTaken(formattedTime);
+
+      // Cálculo de racha: Solo suma si el problema resuelto es el reto de HOY
+      let updatedStreak = streak;
+      if (activeProblem.date === todayStr) {
+        const lastSolvedDate = localStorage.getItem('dailyProblem_LastSolvedDate');
+        if (lastSolvedDate === yesterdayStr) {
+          updatedStreak = streak + 1;
+        } else if (lastSolvedDate === todayStr) {
+          updatedStreak = streak;
+        } else {
+          updatedStreak = 1;
+        }
+        setStreak(updatedStreak);
+        localStorage.setItem('dailyProblem_Streak', updatedStreak.toString());
+        localStorage.setItem('dailyProblem_LastSolvedDate', todayStr);
+      }
+
+      setFeedback({
+        status: 'success',
+        message: `${activeProblem.successMessage} You solved it in ${formattedTime}.`
+      });
+
+      localStorage.setItem(`dailyProblem_${activeProblem.id}`, JSON.stringify({
         solved: true,
         usedHint: showHint,
         time: formattedTime
       }));
-      localStorage.setItem('dailyProblem_Streak', (streak + 1).toString());
+
+      // Limpiamos el startTime temporal ya que el problema fue resuelto
+      localStorage.removeItem(`dailyProblem_startTime_${activeProblem.id}`);
 
     } else {
       setFeedback({ status: 'error', message: 'Incorrect.' });
@@ -57,14 +144,15 @@ export default function Home() {
   };
 
   const handleShare = () => {
-    const timeText = includeTime ? `⏱️ Time: ${timeTaken} \vert{} ` : ""; const problemLink = `https://thedailyproblem.com/?id=${activeProblem.id}`;
+    const timeText = includeTime ? `⏱️ Time: ${timeTaken} | ` : "";
+    const problemLink = `https://thedailyproblem.com/?id=${activeProblem.id}`;
     
-    const shareText = `Correctly solved: ${activeProblem.title}! 💡\n${timeText}❓ Hint: ${showHint ? 'Yes' : 'No'} \vert{} 🔥 Streak: ${streak}\n\n"${activeProblem.context.substring(0, 60)}... [Click link to read more]"\n\nPlay here: ${problemLink}`;
+    const shareText = `Correctly solved: ${activeProblem.title}! 💡\n${timeText}❓ Hint: ${showHint ? 'Yes' : 'No'} | 🔥 Streak: ${streak}\n\n"${activeProblem.context.substring(0, 60)}... [Click link to read more]"\n\nPlay here: ${problemLink}`;
     
     navigator.clipboard.writeText(shareText).then(() => {
       alert("Results copied to clipboard! Ready to paste on X, WhatsApp, etc.");
     });
-};
+  };
 
   if (!isClient) return null; 
 
@@ -72,7 +160,7 @@ export default function Home() {
     <main className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6">
       <div className="mx-auto max-w-3xl space-y-12">
 
-      <header className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between w-full">
+        <header className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between w-full">
           <div className="flex items-center gap-4 cursor-pointer" onClick={() => window.location.href = '/'}>
             <img src="/logo.svg" alt="The Daily Problem Logo" className="w-16 h-16 object-contain rounded-xl shadow-sm" />
             <div className="text-left">
@@ -91,7 +179,7 @@ export default function Home() {
           </div>
         </header>
 
-       <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="mb-6 flex items-center justify-between">
             <span className="text-sm font-semibold uppercase tracking-wider text-blue-600">
               {activeProblem.date === todayStr ? "Today's Challenge" : "Archived Challenge"}
@@ -153,31 +241,66 @@ export default function Home() {
               )}
             </div>
 
-            {isSolved && (
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center mt-2">
-                <Button onClick={handleShare} className="w-full bg-blue-600 hover:bg-blue-700 sm:w-auto">
-                  Share Result 📤
-                </Button>
-                <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
-                  <input 
-                    type="checkbox" 
-                    checked={includeTime} 
-                    onChange={(e) => setIncludeTime(e.target.checked)}
-                    className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
-                  />
-                  Include my time
-                </label>
+            {/* Feedback ahora aparece inmediatamente debajo del input */}
+            {feedback.status !== 'idle' && (
+              <div className={`rounded-lg p-4 text-sm font-medium ${feedback.status === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
+                {feedback.message}
               </div>
             )}
 
-            {feedback.status !== 'idle' && (
-              <div className={`rounded-lg p-4 text-sm font-medium ${feedback.status === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}> {feedback.message} </div> )} {isSolved && ( <div className="mt-2"> <SubscribeBox variant="victory" /> </div> )}  {showHint && !isSolved && ( <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"> <strong>Hint:</strong> {activeProblem.hint} </div> )}  </div> </section>  <section className="pt-8"> <h2 className="mb-6 text-lg font-semibold tracking-tight text-slate-900">Problem Archive</h2> <div className="relative"> <ul className="grid grid-cols-1 md:grid-cols-3 gap-4"> {pastProblems.map((problem) => ( <li key={problem.id} onClick={() => window.location.href = `/?id=${problem.id}`}
+            {/* El Hint desaparece automáticamente cuando isSolved es true */}
+            {showHint && !isSolved && (
+              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                <strong>Hint:</strong> {activeProblem.hint}
+              </div>
+            )}
+
+            {/* Compartir y Suscripción quedan debajo del mensaje de éxito */}
+            {isSolved && (
+              <>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center mt-2">
+                  <Button onClick={handleShare} className="w-full bg-blue-600 hover:bg-blue-700 sm:w-auto">
+                    Share Result 📤
+                  </Button>
+                  <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      checked={includeTime} 
+                      onChange={(e) => setIncludeTime(e.target.checked)}
+                      className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                    />
+                    Include my time
+                  </label>
+                </div>
+
+                <div className="mt-2">
+                  <SubscribeBox variant="victory" />
+                </div>
+              </>
+            )}
+          </div>
+        </section>
+
+        <section className="pt-8">
+          <h2 className="mb-6 text-lg font-semibold tracking-tight text-slate-900">Problem Archive</h2>
+          <div className="relative">
+            <ul className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {pastProblems.map((problem) => (
+                <li
+                  key={problem.id}
+                  onClick={() => window.location.href = `/?id=${problem.id}`}
                   className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 transition-all hover:border-blue-400 hover:shadow-md cursor-pointer"
                 >
-                  <div className="mb-4 flex items-start justify-between">
+                  <div className="mb-4 flex items-center justify-between">
                     <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                       {problem.displayDate}
                     </span>
+                    {/* @ts-ignore */}
+                    {problem.top && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                        ⭐ TOP
+                      </span>
+                    )}
                   </div>
                   <span className="block text-sm font-semibold text-slate-900">{problem.title}</span>
                 </li>
