@@ -525,7 +525,6 @@ export const dailyProblems = [
     "date": "2026-12-02",
     "displayDate": "Dec 02",
     "title": "Dropped Drives",
-    "top": true,
     "context": "A frantic junior sysadmin trips and drops 5 identical-looking master backup drives (Drives A, B, C, D, and E). Without knowing which is which, they blindly insert all 5 drives back into the 5 specific server bays.",
     "options": [
       "Each of the 5 drives belongs to exactly one specific bay.",
