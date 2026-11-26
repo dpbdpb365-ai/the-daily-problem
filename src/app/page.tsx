@@ -220,7 +220,10 @@ export default function Home() {
 
   const handleShare = () => {
     const problemNumber = activeProblem.id.split('-')[0];
-    const track = attemptHistory.map((event) => symbolMap[event]).join(" ");
+    const isPerfect = attemptHistory.length === 1 && attemptHistory[0] === 'correct';
+const track = isPerfect
+  ? "✔ 1st Try"
+  : attemptHistory.map((event) => symbolMap[event]).join(" ");
     const paceEmoji = includeTime ? getPaceEmoji(elapsedSeconds) : "";
     const streakText = streak > 1 ? `🔥 ${streak}` : "";
 
