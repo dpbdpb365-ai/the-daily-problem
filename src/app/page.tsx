@@ -6,6 +6,21 @@ import { Input } from "@/components/ui/input"
 import { dailyProblems } from "@/lib/problems"
 import SubscribeBox from '@/components/SubscribeBox'
 
+type AttemptEvent = 'wrong' | 'hint' | 'correct';
+
+const getPaceEmoji = (seconds: number): string => {
+  if (seconds < 60) return "⚡";     // < 1 min
+  if (seconds < 600) return "🧠";    // 1 - 10 min
+  if (seconds < 3600) return "☕";   // 10 min - 1 h
+  return "🦥";                       // > 1 h
+};
+
+const symbolMap: Record<AttemptEvent, string> = {
+  wrong: "✖",
+  hint: "?",
+  correct: "✔",
+};
+
 export default function Home() {
   const [answer, setAnswer] = useState("");
   const [showHint, setShowHint] = useState(false);
@@ -14,6 +29,8 @@ export default function Home() {
   const [isSolved, setIsSolved] = useState(false);
   const [startTime, setStartTime] = useState<number>(0);
   const [timeTaken, setTimeTaken] = useState<string>("");
+  const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
+  const [attemptHistory, setAttemptHistory] = useState<AttemptEvent[]>([]);
   const [streak, setStreak] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const [includeTime, setIncludeTime] = useState(true);
@@ -57,7 +74,6 @@ export default function Home() {
       if (lastSolvedDate === todayStr || lastSolvedDate === yesterdayStr) {
         setStreak(parseInt(savedStreak, 10));
       } else {
-        // Si dejó pasar un día entero sin resolver el reto diario, pierde la racha
         setStreak(0);
         localStorage.setItem('dailyProblem_Streak', '0');
       }
@@ -72,6 +88,10 @@ export default function Home() {
       setIsSolved(true);
       setShowHint(data.usedHint);
       setTimeTaken(data.time);
+      setElapsedSeconds(data.elapsedSeconds ?? 0);
+      setAttemptHistory(
+        data.history ?? (data.usedHint ? ['hint', 'correct'] : ['correct'])
+      );
       setFeedback({
         status: 'success',
         message: `${currentProblem.successMessage} You solved it in ${data.time}.`
@@ -109,6 +129,13 @@ export default function Home() {
     return false;
   };
 
+  const handleToggleHint = () => {
+    if (!showHint && !attemptHistory.includes('hint')) {
+      setAttemptHistory(prev => [...prev, 'hint']);
+    }
+    setShowHint(!showHint);
+  };
+
   const handleSubmit = () => {
     if (isSolved) return;
 
@@ -123,17 +150,13 @@ export default function Home() {
     const inputNum = parseNumeric(cleanInput);
 
     const isCorrect = validAnswers.some((expected) => {
-      // 1. Coincidencia exacta (ej. "4000", "four", "1/6")
       if (cleanInput === expected) return true;
 
-      // 2. Comparación numérica y de fracciones
       const expectedNum = parseNumeric(expected);
       if (inputNum === null || expectedNum === null) return false;
 
-      // Fracciones equivalentes o ceros extra (ej. "2/12" === "1/6" o "12.50" === "12.5")
       if (Math.abs(inputNum - expectedNum) < 1e-6) return true;
 
-      // Si la respuesta esperada es una fracción (ej. "1/6"), permitir redondeo
       if (expected.includes('/')) {
         if (hasPercent) {
           return matchesRounded(inputNum, expectedNum * 100);
@@ -151,8 +174,12 @@ export default function Home() {
       const seconds = diffInSeconds % 60;
       const formattedTime = `${minutes}m ${seconds}s`;
 
+      const finalHistory: AttemptEvent[] = [...attemptHistory, 'correct'];
+
       setIsSolved(true);
       setTimeTaken(formattedTime);
+      setElapsedSeconds(diffInSeconds);
+      setAttemptHistory(finalHistory);
 
       // Cálculo de racha: Solo suma si el problema resuelto es el reto de HOY
       let updatedStreak = streak;
@@ -177,24 +204,36 @@ export default function Home() {
 
       localStorage.setItem(`dailyProblem_${activeProblem.id}`, JSON.stringify({
         solved: true,
-        usedHint: showHint,
-        time: formattedTime
+        usedHint: showHint || finalHistory.includes('hint'),
+        time: formattedTime,
+        elapsedSeconds: diffInSeconds,
+        history: finalHistory
       }));
 
-      // Limpiamos el startTime temporal ya que el problema fue resuelto
       localStorage.removeItem(`dailyProblem_startTime_${activeProblem.id}`);
 
     } else {
+      setAttemptHistory(prev => [...prev, 'wrong']);
       setFeedback({ status: 'error', message: 'Incorrect.' });
     }
   };
 
   const handleShare = () => {
-    const timeText = includeTime ? `⏱️ Time: ${timeTaken} | ` : "";
+    const problemNumber = activeProblem.id.split('-')[0];
+    const track = attemptHistory.map((event) => symbolMap[event]).join(" ");
+    const paceEmoji = includeTime ? getPaceEmoji(elapsedSeconds) : "";
+    const streakText = streak > 1 ? `🔥 ${streak}` : "";
+
+    const metaParts = [paceEmoji, streakText].filter(Boolean).join(" · ");
+    const statsLine = metaParts ? `${track}  ${metaParts}` : track;
     const problemLink = `https://thedailyproblem.com/?id=${activeProblem.id}`;
-    
-    const shareText = `Correctly solved: ${activeProblem.title}! 💡\n${timeText}❓ Hint: ${showHint ? 'Yes' : 'No'} | 🔥 Streak: ${streak}\n\n"${activeProblem.context.substring(0, 60)}... [Click link to read more]"\n\nPlay here: ${problemLink}`;
-    
+
+    const shareText = [
+      `The Daily Problem #${problemNumber} — ${activeProblem.title}`,
+      statsLine,
+      problemLink
+    ].join("\n");
+
     navigator.clipboard.writeText(shareText).then(() => {
       alert("Results copied to clipboard! Ready to paste on X, WhatsApp, etc.");
     });
@@ -281,27 +320,24 @@ export default function Home() {
                 Submit Answer
               </Button>
               {!isSolved && (
-                <Button variant="outline" onClick={() => setShowHint(!showHint)} className="w-full sm:w-auto">
+                <Button variant="outline" onClick={handleToggleHint} className="w-full sm:w-auto">
                   {showHint ? "Hide Hint" : "Need a Hint?"}
                 </Button>
               )}
             </div>
 
-            {/* Feedback ahora aparece inmediatamente debajo del input */}
             {feedback.status !== 'idle' && (
               <div className={`rounded-lg p-4 text-sm font-medium ${feedback.status === 'success' ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'}`}>
                 {feedback.message}
               </div>
             )}
 
-            {/* El Hint desaparece automáticamente cuando isSolved es true */}
             {showHint && !isSolved && (
               <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
                 <strong>Hint:</strong> {activeProblem.hint}
               </div>
             )}
 
-            {/* Compartir y Suscripción quedan debajo del mensaje de éxito */}
             {isSolved && (
               <>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center mt-2">
@@ -315,7 +351,7 @@ export default function Home() {
                       onChange={(e) => setIncludeTime(e.target.checked)}
                       className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                     />
-                    Include my time
+                    Include pace badge
                   </label>
                 </div>
 

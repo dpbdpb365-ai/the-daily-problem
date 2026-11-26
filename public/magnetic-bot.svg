@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <style>
+      .edge-visible { stroke: #1E293B; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .edge-hidden { stroke: #64748B; stroke-width: 2.2; stroke-dasharray: 6, 6; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .face-front { fill: #EFF6FF; fill-opacity: 0.55; }
+      .face-top { fill: #E0F2FE; fill-opacity: 0.45; }
+      .face-side { fill: #EFF6FF; fill-opacity: 0.65; }
+      .dim-line { stroke: #475569; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+      .dim-tick { stroke: #475569; stroke-width: 1.5; stroke-linecap: round; }
+      .label-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 600; fill: #1E293B; }
+      .node-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" fill="none" />
+
+  
+  <polygon points="90,310 155,265 155,155 90,200" class="face-side" />
+  <polygon points="90,310 340,360 405,315 155,265" class="face-top" />
+  <polygon points="155,265 405,315 405,205 155,155" class="face-front" />
+  <polygon points="90,200 340,250 405,205 155,155" class="face-top" />
+  <polygon points="90,310 340,360 340,250 90,200" class="face-front" />
+  <polygon points="340,360 405,315 405,205 340,250" class="face-side" />
+
+  
+  <line x1="155" y1="265" x2="405" y2="315" class="edge-hidden" />
+  <line x1="155" y1="265" x2="155" y2="155" class="edge-hidden" />
+  <line x1="90" y1="310" x2="155" y2="265" class="edge-hidden" />
+
+  
+  <line x1="90" y1="310" x2="340" y2="360" class="edge-visible" />
+  <line x1="340" y1="360" x2="405" y2="315" class="edge-visible" />
+  <line x1="90" y1="310" x2="90" y2="200" class="edge-visible" />
+  <line x1="340" y1="360" x2="340" y2="250" class="edge-visible" />
+  <line x1="405" y1="315" x2="405" y2="205" class="edge-visible" />
+  <line x1="90" y1="200" x2="340" y2="250" class="edge-visible" />
+  <line x1="90" y1="200" x2="155" y2="155" class="edge-visible" />
+  <line x1="155" y1="155" x2="405" y2="205" class="edge-visible" />
+  <line x1="340" y1="250" x2="405" y2="205" class="edge-visible" />
+
+  
+  <g>
+    <line x1="90" y1="322" x2="90" y2="340" class="dim-line" stroke-opacity="0.4" />
+    <line x1="340" y1="372" x2="340" y2="390" class="dim-line" stroke-opacity="0.4" />
+    <line x1="90" y1="334" x2="340" y2="384" class="dim-line" />
+    <line x1="86" y1="330" x2="94" y2="338" class="dim-tick" />
+    <line x1="336" y1="380" x2="344" y2="388" class="dim-tick" />
+    <rect x="200" y="347" width="36" height="20" rx="4" fill="#FFFFFF" fill-opacity="0.9" />
+    <text x="218" y="361" class="label-text" text-anchor="middle">8 m</text>
+  </g>
+
+  
+  <g>
+    <line x1="348" y1="366" x2="363" y2="376" class="dim-line" stroke-opacity="0.4" />
+    <line x1="412" y1="320" x2="427" y2="330" class="dim-line" stroke-opacity="0.4" />
+    <line x1="357" y1="370" x2="421" y2="325" class="dim-line" />
+    <line x1="353" y1="374" x2="361" y2="366" class="dim-tick" />
+    <line x1="417" y1="329" x2="425" y2="321" class="dim-tick" />
+    <rect x="375" y="352" width="36" height="20" rx="4" fill="#FFFFFF" fill-opacity="0.9" />
+    <text x="393" y="366" class="label-text" text-anchor="middle">3 m</text>
+  </g>
+
+  
+  <g>
+    <line x1="415" y1="205" x2="433" y2="205" class="dim-line" stroke-opacity="0.4" />
+    <line x1="415" y1="315" x2="433" y2="315" class="dim-line" stroke-opacity="0.4" />
+    <line x1="425" y1="205" x2="425" y2="315" class="dim-line" />
+    <line x1="421" y1="202" x2="429" y2="208" class="dim-tick" />
+    <line x1="421" y1="312" x2="429" y2="318" class="dim-tick" />
+    <rect x="432" y="248" width="36" height="20" rx="4" fill="#FFFFFF" fill-opacity="0.9" />
+    <text x="450" y="262" class="label-text" text-anchor="middle">3 m</text>
+  </g>
+
+  
+  <g>
+    <circle cx="90" cy="310" r="14" fill="#DCFCE7" stroke="#22C55E" stroke-width="3" />
+    <circle cx="90" cy="310" r="6" fill="#15803D" />
+    <rect x="35" y="328" width="56" height="20" rx="4" fill="#DCFCE7" stroke="#22C55E" stroke-width="1.5" />
+    <text x="63" y="342" class="node-text" fill="#15803D" text-anchor="middle">START</text>
+  </g>
+
+  
+  <g>
+    <circle cx="405" cy="205" r="14" fill="#FEE2E2" stroke="#EF4444" stroke-width="3" />
+    <circle cx="405" cy="205" r="6" fill="#B91C1C" />
+    <rect x="375" y="152" width="62" height="20" rx="4" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.5" />
+    <text x="406" y="166" class="node-text" fill="#B91C1C" text-anchor="middle">TARGET</text>
+  </g>
+</svg>

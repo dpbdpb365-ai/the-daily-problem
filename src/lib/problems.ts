@@ -426,10 +426,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "026-the-deja-vu-point",
+    "id": "026-deja-vu",
     "date": "2026-11-27",
     "displayDate": "Nov 27",
-    "title": "The Déjà Vu Point",
+    "title": "Déjà Vu",
     "context": "You walk from Town A to Town B, which are exactly 20 miles apart, starting at 8:00 AM. The next day, you walk back from Town B to Town A, also starting at exactly 8:00 AM.",
     "options": [
       "The 10 miles closest to Town A are perfectly paved.",
@@ -445,10 +445,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "027-the-curators-equation",
+    "id": "027-the-grand-hall",
     "date": "2026-11-28",
     "displayDate": "Nov 28",
-    "title": "The Curator's Equation",
+    "title": "The Grand Hall",
     "context": "A renowned museum strictly regulates its entrance. Exactly 200 visitors are admitted every hour, maintaining a continuous steady flow. The fire marshal's live counter shows that there are consistently 500 visitors inside the building at any given moment.",
     "options": [
       "70% of visitors follow the audio-guided 'Highlights Tour' and exit the building in exactly 90 minutes.",
@@ -463,10 +463,10 @@ export const dailyProblems = [
     "plays": "New"
   },
   {
-    "id": "028-the-island-charter",
+    "id": "028-the-charter",
     "date": "2026-11-29",
     "displayDate": "Nov 29",
-    "title": "The Island Charter",
+    "title": "The Charter",
     "context": "You are organizing a school trip to a remote island. The charter airline bills strictly per full aircraft rather than individual tickets, meaning chartering any plane with empty seats is not permitted.",
     "options": [
       "The fleet provides only two aircraft models: a light aircraft carrying exactly 3 passengers, and an executive turboprop carrying exactly 10 passengers.",
@@ -482,10 +482,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "029-the-extra-canvas",
+    "id": "029-under-cover",
     "date": "2026-11-30",
     "displayDate": "Nov 30",
-    "title": "The Extra Canvas",
+    "title": "Under Cover",
     "image": "029-the-extra-canvas.svg",
     "context": "You are hosting an event in a circular outdoor venue with a diameter of 20 meters. To protect the space from rain, you hang a square canvas so that all four of its corners touch the venue's circular boundary. To increase coverage, you hang a second identical canvas directly over the first, rotated by 45 degrees.",
     "options": [
@@ -539,10 +539,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "032-the-weight-of-the-slow-miles",
+    "id": "032-the-split-decision",
     "date": "2026-12-03",
     "displayDate": "Dec 03",
-    "title": "The Weight of the Slow Miles",
+    "title": "The Split Decision",
     "context": "Jack and Bob compete in a 24-mile endurance race. Both runners plan to run at exactly 12 mph when feeling fresh, and exactly 6 mph when fatigued.",
     "options": [
       "Jack splits his race by DISTANCE: He runs the first 12 miles at 12 mph, and the final 12 miles at 6 mph.",
@@ -552,7 +552,7 @@ export const dailyProblems = [
     "answer": "20",
     "hint": "No hint for this one",
     "successMessage": "Correct! 20 minutes. Because Jack split by distance, his slower speed acted like an anchor, giving it twice the 'weight' on his overall time. He averaged 8 mph, while Bob averaged exactly 9 mph.",
-    "solution": "The illusion is assuming both runners average 9 mph (the midpoint of 12 and 6). Alice splits by distance: Her first 12 miles take 1 hour (12 mi / 12 mph). Her final 12 miles take 2 hours (12 mi / 6 mph). He finishes in exactly 3 hours (180 minutes). Because he spent 2 hours going slow and only 1 hour going fast, the slow speed heavily drags down his overall average to 8 mph. \n\nBob splits by time. Let 'T' be his total hours. He runs at 12 mph for T/2, and 6 mph for T/2. His distance equation is: (12 × T/2) + (6 × T/2) = 24 miles. This simplifies to 6T + 3T = 24, so 9T = 24. Bob finishes in 24/9 hours, which is exactly 2 hours and 40 minutes (160 minutes). 180 - 160 = exactly 20 minutes of difference.",
+    "solution": "The illusion is assuming both runners average 9 mph (the midpoint of 12 and 6). Jack splits by distance: Her first 12 miles take 1 hour (12 mi / 12 mph). His final 12 miles take 2 hours (12 mi / 6 mph). He finishes in exactly 3 hours (180 minutes). Because he spent 2 hours going slow and only 1 hour going fast, the slow speed heavily drags down his overall average to 8 mph. \n\nBob splits by time. Let 'T' be his total hours. He runs at 12 mph for T/2, and 6 mph for T/2. His distance equation is: (12 × T/2) + (6 × T/2) = 24 miles. This simplifies to 6T + 3T = 24, so 9T = 24. Bob finishes in 24/9 hours, which is exactly 2 hours and 40 minutes (160 minutes). 180 - 160 = exactly 20 minutes of difference.",
     "plays": "New"
   },
   {
@@ -573,10 +573,10 @@ export const dailyProblems = [
     "plays": "New"
   },
   {
-    "id": "034-the-hacker's-passcode",
+    "id": "034-brute-force",
     "date": "2026-12-05",
     "displayDate": "Dec 05",
-    "title": "The Hacker's Passcode",
+    "title": "Brute Force",
     "context": "A security door is locked with a 4-digit binary passcode (the code consists only of 0s and 1s). The keypad only has two buttons: [0] and [1].",
     "options": [
       "The system has no 'Enter' button. It continuously evaluates the last 4 buttons you pressed.",
@@ -609,10 +609,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "036-the-inspection-drone",
+    "id": "036-the-drone",
     "date": "2026-12-07",
     "displayDate": "Dec 07",
-    "title": "The Inspection Drone",
+    "title": "The Drone",
     "context": "An autonomous drone inspects a long, straight underground fiber-optic tunnel. On Monday, it departs Server A at exactly midnight and arrives at Server B at 1:00 AM, pausing and accelerating erratically to scan for damage. On Tuesday, it makes the return trip, departing Server B at midnight and arriving at Server A at 1:00 AM, again moving at completely random speeds.",
     "options": [
       "Assume the drone never traveled at a constant rate on either day.",
@@ -627,10 +627,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "037-the-bottling-plant",
+    "id": "037-the-bottle-neck",
     "date": "2026-12-08",
     "displayDate": "Dec 08",
-    "title": "The Bottling Plant",
+    "title": "The Bottle-Neck",
     "context": "A massive automated beverage plant turns on its main conveyor belt at exactly 6:00 AM. Empty glass bottles immediately begin entering an enclosed washing and filling tunnel at a perfectly steady rate of 400 bottles per minute.",
     "options": [
       "Every single bottle takes exactly 15 minutes to travel through the entire tunnel before exiting the other side.",
@@ -662,10 +662,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "039-the-lemmings-bridge",
+    "id": "039-lemmings",
     "date": "2026-12-10",
     "displayDate": "Dec 10",
-    "title": "The Lemmings Bridge",
+    "title": "Lemmings",
     "context": "You are playing a custom, slightly glitched level of the classic retro game 'Lemmings'. On this screen, 50 identical Lemmings are walking along a perfectly straight digital bridge that is exactly 100 pixels wide. They all move at a constant speed of 1 pixel per second.",
     "options": [
       "Due to a glitch in this specific level, whenever two Lemmings bump into each other, they both instantly reverse direction.",
@@ -716,10 +716,10 @@ export const dailyProblems = [
     "top": true
   },
   {
-    "id": "042-storage-bid",
+    "id": "042-the-price-is-right",
     "date": "2026-12-13",
     "displayDate": "Dec 13",
-    "title": "Storage Bid",
+    "title": "The Price is Right",
     "context": "A storage facility owner presents you with 4 identical, abandoned storage units. Inside one random unit is a rare coin collection appraised at exactly $10,000; the other three units are completely empty. You can pay a fixed fee to cut the lock and open a unit. If it is empty, you pay the exact same fee again to open a second unit, repeating the process one by one until you find the collection.",
     "options": [
       "Once you find the $10,000 coin collection, you immediately stop opening units and keep it.",
@@ -747,6 +747,43 @@ export const dailyProblems = [
     "hint": "Don't just pre-buy the average usage (150). Think about pre-buying one extra pack: if you end up needing it, you save $8 ($10 overage minus $2 pre-paid). If you don't need it, you waste $2. What is the minimum probability of needing that extra pack to make it worth buying?",
     "successMessage": "Correct! 180 packs. Most people instinctively pre-buy the average (150), but the cost of under-buying is much higher than over-buying. Every extra pack you pre-buy saves you $8 if you use it (avoiding the $10 overage fee) and only wastes $2 if it expires. That means pre-buying one more pack is a smart bet as long as there is at least a 20% chance you'll use it (20% × $8 saved = $1.60 vs. 80% × $2 wasted = $1.60). Since usage is uniform between 100 and 200, you should pre-buy up to the point where there is still a 20% chance of exceeding it—which is 180.",
     "solution": "The classic trap is pre-buying the average monthly usage of 150 packs. That only works if wasting a pack and paying an overage fee cost the exact same amount. Here, the penalty for running out is much steeper.\n\nInstead of using formulas, ask yourself a simple marginal question: 'Should I pre-buy one more pack?'\n- If I end up needing it, I save $8 ($10 on-demand rate - $2 pre-paid rate).\n- If it goes unused and expires, I waste $2.\n\nBecause your potential savings ($8) are 4 times bigger than your potential waste ($2), you should keep adding packs to your quota as long as the probability of using that next pack is at least 20%:\n- Break-even point: (20% × $8 saved) - (80% × $2 wasted) = $1.60 - $1.60 = $0.\n\nSince monthly usage is uniformly distributed between 100 and 200 packs, the probability of needing at least 180 packs is exactly 20% (the top 20 numbers out of the 100-pack range).\n\nIf you pre-buy 181, the chance of using that 181st pack drops below 20%, making it a losing bet. Therefore, the exact cost-minimizing quota is 180 packs.",
+    "plays": "New"
+  },
+  {
+    "id": "044-the-magnetic-bot",
+    "date": "2026-12-15",
+    "displayDate": "Dec 15",
+    "title": "The Magnetic Bot",
+    "imageUrl": "/magnetic-bot.svg",
+    "context": "A tiny magnetic inspection robot is placed at the bottom-front-left corner of an empty, rectangular metal cargo container. Its mission is to travel to the exact opposite corner (top-back-right) using the shortest possible route.",
+    "options": [
+      "The container is exactly 8 meters long, 3 meters wide, and 3 meters high.",
+      "The robot cannot fly; its magnetic wheels must stay on the interior floor, walls, or ceiling at all times."
+    ],
+    "question": "What is the exact length (in meters) of the shortest possible path the robot can take?",
+    "answer": "10",
+    "hint": "Don't try to solve this in 3D. Imagine the container is made of cardboard—what happens if you unfold two of its connected surfaces flat onto the ground?",
+    "successMessage": "Correct! 10 meters. Instead of thinking in 3D, unfold the floor (8m × 3m) and the back-side wall (8m × 3m) flat like a cardboard box. Together, they form a single flat rectangle measuring 8 meters by 6 meters. The shortest path between opposite corners is a straight diagonal line: a classic 6-8-10 right triangle.",
+    "solution": "The instinct is to stay in 3D—either following the edges (8 + 3 + 3 = 14m) or crossing the floor diagonally and then climbing straight up the corner (≈ 11.54m). Both paths are too long.\n\nThe secret is to flatten the problem into 2D. Imagine the container is a cardboard box and unfold the floor (8m × 3m) together with the long side wall (8m × 3m) so they lie completely flat.\n\nNow the two surfaces form a single flat rectangle:\n- Length = 8 meters\n- Combined Width = 3m (floor) + 3m (wall) = 6 meters\n\nSince the shortest distance between two points on a flat surface is a straight line, the robot simply drives diagonally across this 8m × 6m rectangle. Using the Pythagorean theorem (or spotting the classic 3-4-5 triangle doubled):\n6² + 8² = 36 + 64 = 100\n√100 = 10 meters.",
+    "plays": "New"
+  },
+  {
+    "id": "050-the-sleeping-python",
+    "date": "2026-12-21",
+    "displayDate": "Dec 21",
+    "title": "The Sleeping Python",
+    "image": "050-the-sleeping-python.svg",
+    "context": "A researcher observes a python sleeping on a flat rock, coiled tightly into a solid, flat spiral with no gaps between its coils. To estimate its length without disturbing it, she measures the coil from above.",
+    "options": [
+      "The coiled snake forms a flat circle with a diameter of 40 cm.",
+      "The snake's body has a uniform width (thickness) of 4 cm from head to tail.",
+      "The coils are packed tightly together from the center all the way to the outer edge, leaving no empty space."
+    ],
+    "question": "Approximately how long is the python (in centimeters, rounded to the nearest integer)?",
+    "answer": "314",
+    "hint": "Don't try to calculate the length of a spiral. Instead, think about the total surface area the snake covers from above.",
+    "successMessage": "Correct! 314 cm (just over 3 meters). Instead of wrestling with spiral equations, you just equate the area of the circle (πr²) to the area of the uncoiled snake (Length × Width).",
+    "solution": "Calculating the exact arc length of an Archimedean spiral requires calculus, but there is a simple geometric shortcut: conservation of area.\n\n1. Area of the coiled circle:\nSince the diameter is 40 cm, the radius is r = 20 cm.\nArea = π × r² = π × 20² = 400π cm².\n\n2. Area of the uncoiled snake:\nIf you stretched the snake out straight, it would roughly form a long rectangle with a width of 4 cm and a length of L.\nArea = 4 × L.\n\n3. Equate both areas:\n4 × L = 400π\nL = 100π ≈ 314.16 cm.\n\nRounded to the nearest integer, the python is 314 cm long.",
     "plays": "New"
   }
 ];
