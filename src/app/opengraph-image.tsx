@@ -1,8 +1,7 @@
 import { ImageResponse } from 'next/og';
 
-// Configuración de la imagen para redes sociales (1200x630 es el estándar)
 export const runtime = 'edge';
-export const alt = 'The Daily Problem';
+export const alt = 'The Daily Problem — No formulas. Just pure logic.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -11,7 +10,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: '#0A0A0A', // Tu fondo oscuro
+          background: '#0F172A', // Slate 900 (combina con tu sitio)
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -23,23 +22,57 @@ export default async function Image() {
         }}
       >
         {/* Etiqueta superior */}
-        <div style={{ color: '#FDE047', fontSize: 32, fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 40 }}>
-          Reto del Día
+        <div
+          style={{
+            color: '#60A5FA', // Blue 400
+            fontSize: 28,
+            fontWeight: 'bold',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            marginBottom: 32,
+          }}
+        >
+          Daily Logic Puzzle
         </div>
 
-        {/* Título gigante del problema */}
-        <div style={{ color: 'white', fontSize: 80, fontWeight: '900', textAlign: 'center', lineHeight: 1.1, marginBottom: 40 }}>
-          El Dilema del Prisionero
+        {/* Título principal */}
+        <div
+          style={{
+            color: '#FFFFFF',
+            fontSize: 84,
+            fontWeight: 900,
+            textAlign: 'center',
+            lineHeight: 1.1,
+            letterSpacing: '-0.02em',
+            marginBottom: 28,
+          }}
+        >
+          The Daily Problem
         </div>
 
-        {/* Subtítulo o pregunta corta (opcional, para tu idea B) */}
-        <div style={{ color: '#A1A1AA', fontSize: 40, textAlign: 'center' }}>
-          ¿Cooperar o traicionar? La decisión es tuya.
+        {/* Subtítulo */}
+        <div
+          style={{
+            color: '#94A3B8', // Slate 400
+            fontSize: 40,
+            textAlign: 'center',
+          }}
+        >
+          No formulas. Just pure logic.
         </div>
 
-        {/* Tu marca en la parte inferior */}
-        <div style={{ position: 'absolute', bottom: 50, color: '#FDE047', fontSize: 28, fontWeight: 'bold' }}>
-          the daily problem
+        {/* Dominio abajo */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 48,
+            color: '#64748B',
+            fontSize: 24,
+            fontWeight: 600,
+            letterSpacing: '0.05em',
+          }}
+        >
+          thedailyproblem.com
         </div>
       </div>
     ),
